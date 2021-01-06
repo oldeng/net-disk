@@ -3,11 +3,11 @@
     <ScpDivider></ScpDivider>
     <div class="footer-top">
       <div class="info">
-        <img class="logo" :src="logoUrl" />
+        <img class="logo" :src="logoUrl"/>
         <div class="link-wrapper">
-          <div class="info-website">地址：陕西省西安市雁塔区</div>
-          <div class="info-email">邮箱：1162714483@qq.com &nbsp; 2435065796@qq.com</div>
-          <div class="info-welcome">如果你也是对技术感兴趣的小伙伴，欢迎加入我们</div>
+          <div class="info-website">xxxx</div>
+          <div class="info-email">邮箱：xxxx@qq.com &nbsp;</div>
+          <div class="info-welcome">xxxxxxxx</div>
         </div>
       </div>
       <div class="code-2-img-wrapper">
@@ -23,9 +23,9 @@
     </div>
     <div class="copy-right-wrapper">
       <div class="copy-right">
-        <span>奇文共赏 2020 版权所有&nbsp;|&nbsp;</span>
+        <span>xxxx 2020 版权所有&nbsp;|&nbsp;</span>
         <span>
-          <a style="color:white;" href="http://beian.miit.gov.cn/" target="_blank">陕ICP备19020251号</a>&nbsp;
+          <a style="color:white;" href="http://beian.miit.gov.cn/" target="_blank">备案</a>&nbsp;
         </span>
       </div>
       <div class="tip-website">为获得最佳浏览体验，建议使用IE11、FireFox50.5、Chrome51.0及以上版本的浏览器</div>
@@ -82,7 +82,7 @@ export default {
 @import '~@/assets/styles/varibles.styl'
 .footer-wrapper
   background $Info
-  margin-top 20px
+  margin-top 10px
   >>> .divider
     height 3px
     margin 0

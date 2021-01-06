@@ -32,10 +32,11 @@ export default {
 .file-wrapper
   width 100% !important
 .el-container
+  box-sizing: border-box;
   .el-aside
     border-right solid 1px $BorderLight
     background  $Info
-    height calc(100vh - 70px)
+    height calc(100vh - 61px)
     setScrollbar(4px)
 .el-main
   padding-top 0px !important
