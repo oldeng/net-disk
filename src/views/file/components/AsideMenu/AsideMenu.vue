@@ -45,6 +45,10 @@
         <i class="el-icon-box"></i>
         <span slot="title" v-show="!isFolder">回收站</span>
       </el-menu-item>
+      <el-menu-item index="8" title="资产">
+        <i class="el-icon-box"></i>
+        <span slot="title" v-show="!isFolder">资产</span>
+      </el-menu-item>
     </el-menu>
     <div class="store-wrapper" v-show="!isFolder">
       <el-progress :percentage="storagePercentage" :color="storageColor" :show-text="false"></el-progress>

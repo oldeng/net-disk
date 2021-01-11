@@ -40,6 +40,9 @@
       @setSelectionFile="setSelectionFile"
       @getTableDataByType="getTableDataByType"
     ></FileTable>
+    <div v-if="fileType == 8">
+      资产
+    </div>
     <el-pagination
       v-if="fileType === 0"
       :current-page="pageData.currentPage"
@@ -241,7 +244,9 @@ export default {
         currentPage: this.pageData.currentPage,
         pageCount: this.pageData.pageCount,
       }
+      debugger;
       getfilelist(data).then(res => {
+        debugger;
         if (res.success) {
           this.fileList = res.data
           this.pageData.total = res.total

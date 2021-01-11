@@ -1,7 +1,5 @@
 <template>
     <div id="global-uploader">
-
-        <!-- 上传 -->
         <uploader
                 ref="uploader"
                 :options="options"
@@ -12,9 +10,7 @@
                 @file-error="onFileError"
                 class="uploader-app">
             <uploader-unsupport></uploader-unsupport>
-
             <uploader-btn id="global-uploader-btn" :attrs="attrs" ref="uploadBtn">选择文件</uploader-btn>
-
             <uploader-list v-show="panelShow">
                 <div class="file-panel" slot-scope="props" :class="{'collapse': collapse}">
                     <div class="file-title">
@@ -28,7 +24,6 @@
                             </el-button>
                         </div>
                     </div>
-
                     <ul class="file-list">
                         <li v-for="file in props.fileList" :key="file.id">
                             <uploader-file :class="'file_' + file.id" ref="files" :file="file" :list="true"></uploader-file>
@@ -37,12 +32,9 @@
                     </ul>
                 </div>
             </uploader-list>
-
         </uploader>
-
     </div>
 </template>
-
 <script>
     import SparkMD5 from 'spark-md5'
     import Cookies from 'js-cookie'
@@ -78,10 +70,8 @@
             }
         },   
         mounted() {
-
             this.$EventBus.$on('openUploader', query => {
                 this.params = query || {};
-                // this.$refs.uploadBtn.click()
                 var e = document.createEvent('MouseEvent');
                 e.initEvent('click', false, false);
                 this.$refs.uploadBtn.$el.dispatchEvent(e);
