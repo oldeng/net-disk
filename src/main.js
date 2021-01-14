@@ -11,7 +11,7 @@ import '@/assets/styles/css/mediaScreen.styl'
 import '@/router/before.js'
 import 'element-ui/lib/theme-chalk/index.css'
 import element from './element.js'
-import uploader from 'vue-simple-uploader'
+import uploader from 'vue-simple-uploader/src'
 
 
 Vue.config.productionTip = false;

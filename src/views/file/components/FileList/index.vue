@@ -244,9 +244,7 @@ export default {
         currentPage: this.pageData.currentPage,
         pageCount: this.pageData.pageCount,
       }
-      debugger;
       getfilelist(data).then(res => {
-        debugger;
         if (res.success) {
           this.fileList = res.data
           this.pageData.total = res.total

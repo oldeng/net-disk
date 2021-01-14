@@ -1,7 +1,8 @@
 <template>
   <div class="operation-menu-wrapper">
     <el-button-group>
-      <el-button size="medium" type="primary" icon="el-icon-upload2" id="uploadFileId" @click="upload()">上传</el-button>
+      <el-button size="medium" type="primary" icon="el-icon-upload2" id="uploadFileId" @click="upload(false)">上传文件</el-button>
+      <el-button size="medium" type="primary" icon="el-icon-upload2" id="uploadFileId" @click="upload(true)">上传文件夹</el-button>
       <el-button size="medium" type="primary" icon="el-icon-plus" @click="addFolder()" v-if="!fileType">新建文件夹</el-button>
       <el-button size="medium" type="primary" :disabled="!selectionFile.length" icon="el-icon-delete" @click="deleteSelectedFile()">删除</el-button>
       <el-button size="medium" type="primary" :disabled="!selectionFile.length" icon="el-icon-rank" @click="moveSelectedFile()" v-if="!fileType">移动</el-button>
@@ -88,9 +89,11 @@ export default {
     }
   },
   methods: {
-    upload() {
+    upload(directory) {
+      // directory 上传单文件或者文件夹
       // 打开文件选择框
-      this.$EventBus.$emit('openUploader', this.uploadFileData)
+      debugger;
+      this.$EventBus.$emit('openUploader', this.uploadFileData, directory)
     },
     //  新建文件夹按钮：打开模态框
     addFolder() {

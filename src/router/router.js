@@ -17,6 +17,10 @@ export default new Router({
       component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
       meta: { title: '登录 - 奇文网盘' },
     }, {
+      path: '/db-table',
+      name: 'db-table',
+      component: () => import(/* webpackChunkName: "table" */ '@/views/table/db-table.vue'),
+    },{
       path: '/register',
       name: 'Register',
       component: () => import(/* webpackChunkName: "register" */ '@/views/Register.vue'),
