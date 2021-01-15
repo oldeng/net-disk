@@ -66,7 +66,7 @@
           </ul>
         </div>
       </uploader-list>
-      <uploader-list v-show="successList.length !== 0">
+      <uploader-list v-show="panelFailShow">
         <div class="file-panel">
           <div class="file-title">
             <span class="title-span">失败列表</span>
@@ -81,15 +81,22 @@
                   :class="collapse ? 'el-icon-full-screen' : 'el-icon-minus'"
                 ></i>
               </el-button>
-              <el-button @click="close" type="text" title="关闭">
+              <el-button @click="closeFailList" type="text" title="关闭">
                 <i class="iconfont el-icon-close"></i>
               </el-button>
             </div>
           </div>
           <ul class="file-list">
-            <li class="list-item" v-for="(fail, index) in successList" :key="fail+index">
+            <li
+              class="list-item"
+              v-for="(fail, index) in successList"
+              :key="fail + index"
+            >
               {{ fail }}
             </li>
+            <div class="no-file" v-if="!successList.length">
+              <i class="iconfont icon-empty-file"></i> 暂无失败文件
+            </div>
           </ul>
         </div>
       </uploader-list>
@@ -99,6 +106,7 @@
 <script>
 import SparkMD5 from "spark-md5";
 import Cookies from "js-cookie";
+import { createFile } from "@/request/file.js";
 
 export default {
   data() {
@@ -154,6 +162,14 @@ export default {
     });
   },
   computed: {
+    filePath: {
+      get() {
+        return this.$route.query.filePath;
+      },
+      set() {
+        return "";
+      },
+    },
     //Uploader实例
     uploader() {
       return this.$refs.uploader.uploader;
@@ -161,19 +177,18 @@ export default {
   },
   methods: {
     vtext(params) {
-      console.log("--->", JSON.stringify(params, " ", " "));
+      //   console.log("--->", JSON.stringify(params, " ", " "));
     },
     fileArrAdded(files, fileList) {
-      console.log("----------");
-      console.log(files, fileList);
-      console.log("----------");
+      //   console.log("----------");
+      //   console.log(files, fileList);
+      //   console.log("----------");
       //   this.fileList = files;
     },
     // 添加文件的回调
     filesAdded(file) {
       this.panelShow = true;
       this.computeMD5(file);
-      console.log("选择文件夹文件名称", file.name);
     },
     onFileProgress(rootFile, file, chunk) {
       console.log(
@@ -182,9 +197,15 @@ export default {
         }`
       );
     },
+    getDir(pathes) {
+        if (pathes.length >= 1) {
+            return `${this.filePath}${pathes.join('/')}/`
+        } else {
+            return this.filePath;
+        }
+    },
     // 文件上传成功的回调
     onFileSuccess(rootFile, file, response, chunk) {
-      console.log(rootFile, file, response, chunk);
       if (response == "") {
         this.statusSet(file.id, "failed");
         return;
@@ -195,14 +216,32 @@ export default {
       if (result.success) {
         console.log(`${file.relativePath}上传成功`);
         this.$message.success(`${file.relativePath}上传成功`);
+        // 新建目录
+        let arr = file.relativePath.split("/");
+        arr.pop();
+        let dir = arr.pop();
+        this.createDir(`${ this.getDir(arr) }`, dir).then((res) => {
+            // 移动文件到新建的目录
+            // 调用移动文件API
+        }).catch(err => {
+            this.$message({
+                message: err,
+                type: "error",
+            });
+        });
+        
         this.successList.push(file.relativePath);
         this.statusRemove(file.id);
         this.$EventBus.$emit("refreshList", "");
         this.$EventBus.$emit("refreshStorage", "");
+
+        this.panelFailShow = true;
       } else {
         this.$message.error(result.errorMessage);
         this.statusSet(file.id, "failed");
         this.failList.push(file.relativePath);
+
+        this.panelFailShow = true;
       }
       console.log("成功列表", this.successList);
       console.log("失败列表", this.failList);
@@ -211,6 +250,23 @@ export default {
       this.$message({
         message: response,
         type: "error",
+      });
+    },
+    createDir(filePath, dir) {
+      let data = {
+        fileName: dir,
+        filePath: filePath,
+        isDir: 1,
+      };
+      return createFile(data).then((res) => {
+        if (res.success) {
+          this.$message.success("添加成功");
+          this.$emit("getTableDataByType");
+          return data
+        } else {
+          this.$message.warning(res.errorMessage);
+          return Promise.reject(`创建目录${data.fileName}失败`);
+        }
       });
     },
     /**
@@ -288,6 +344,9 @@ export default {
     close() {
       this.uploader.cancel();
       this.panelShow = false;
+    },
+    closeFailList() {
+      this.panelFailShow = false;
     },
     /**
      * 新增的自定义的状态: 'md5'、'transcoding'、'failed'
@@ -400,9 +459,9 @@ export default {
       }
 
       .list-item {
-          padding: 10px;
-          background-color: #DC4C3F;
-          border-bottom: 1px solid #ddd;
+        padding: 10px;
+        background-color: #DC4C3F;
+        border-bottom: 1px solid #ddd;
       }
     }
 

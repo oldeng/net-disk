@@ -92,7 +92,6 @@ export default {
     upload(directory) {
       // directory 上传单文件或者文件夹
       // 打开文件选择框
-      debugger;
       this.$EventBus.$emit('openUploader', this.uploadFileData, directory)
     },
     //  新建文件夹按钮：打开模态框
@@ -113,6 +112,7 @@ export default {
     },
     //  新建文件夹模态框-确定按钮
     createFile(fileName) {
+      debugger;
       let data = {
         fileName: fileName,
         filePath: this.filePath,
@@ -127,7 +127,6 @@ export default {
         }
       })
     },
-
     //  批量操作-删除按钮
     deleteSelectedFile() {
       let data = {
