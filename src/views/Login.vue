@@ -146,7 +146,7 @@ export default {
             username: this.ruleForm.userName,
             password: this.ruleForm.password,
           };
-          login(data, true).then((res) => {
+          login(`/user/login?username=${data.username}&password=${data.password}`,data, true).then((res) => {
             if (res.success) {
               if (document.location.host.indexOf(".qiwenshare.com") != -1) {
                 Cookies.set("token", res.data.token, {

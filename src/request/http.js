@@ -74,27 +74,21 @@ export function get(url, params, info = '') {
       })
   });
 }
-/** 
- * post方法，对应post请求 
- * info为 true，formData格式；
- * info为 undefined或false，是json格式
- */
-export function post(url, data = {}, info) {
-  return new Promise((resolve, reject) => {
-    let newData = data
-    if (info) {  //  转formData格式
-      newData = new FormData();
-      for (let i in data) {
-        newData.append(i, data[i]);
-      }
+export function post(url, data) {
+  const instance = axios.create();
+  const options = Object.assign({
+    headers: {
+      'content-type': 'application/json',
+      'token': Cookies.get('token')
     }
-    axios.post(url, newData)
-      .then(res => {
-        resolve(res.data);
-      })
-      .catch(err => {
-        reject(err.data)
-      })
+  }, {
+    url: url,
+    method: 'post',
+    data: data,
+  });
+  return instance(options).then(res => {
+    console.log('res', res);
+    return res.data;
   });
 }
 

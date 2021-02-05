@@ -220,15 +220,15 @@ export default {
         let arr = file.relativePath.split("/");
         arr.pop();
         let dir = arr.pop();
-        this.createDir(`${ this.getDir(arr) }`, dir).then((res) => {
-            // 移动文件到新建的目录
-            // 调用移动文件API
-        }).catch(err => {
-            this.$message({
-                message: err,
-                type: "error",
-            });
-        });
+        // this.createDir(`${ this.getDir(arr) }`, dir).then((res) => {
+        //     // 移动文件到新建的目录
+        //     // 调用移动文件API
+        // }).catch(err => {
+        //     this.$message({
+        //         message: err,
+        //         type: "error",
+        //     });
+        // });
         
         this.successList.push(file.relativePath);
         this.statusRemove(file.id);
@@ -327,6 +327,7 @@ export default {
           ...this.params,
         },
       });
+      debugger;
       file.uniqueIdentifier = md5;
       file.resume();
       this.statusRemove(file.id);
