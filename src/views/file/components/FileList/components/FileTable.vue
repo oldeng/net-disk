@@ -362,6 +362,7 @@ export default {
             ],
             activeIndex: 0
           }
+          debugger;
           this.$store.commit('setImgReviewData', data)
         }
         //  若当前点击项是pdf
